@@ -1,0 +1,16 @@
+{
+    "name": "lcatlett/newrelic-guzzle-client",
+    "description": "A workaround for performance bottlenecks in Guzzle requests due to New Relic agent.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lindsey Catlett",
+            "email": "lindsey.catlett@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": ["NewRelicGuzzle.php"]
+    }
+}
