@@ -2,7 +2,7 @@
 
 This package provides a workaround to resolve performance and memory bottlenecks in Guzzle requests caused by the New Relic Agent's current implementation of metrics tracking middleware for Guzzle 6 clients.
 
-:warning: This library is a *workaround* relying on the current implementation of the newrelic extension!
+:warning: This library is a *workaround* relying on the current implementation of the New Relic extension!
 
 Test it carefully before to use it with a new extension release.
 
@@ -15,7 +15,8 @@ composer require lcatlett/newrelic-guzzle-client
 ```
 That's all! The script is automatically imported thanks to [Composer autoloader](https://getcomposer.org/doc/04-schema.md#files).
 
-ℹ️ You can also copy the file [`NewRelicGuzzle.php`](NewRelicGuzzle.php) and include directly in your project (this is needed for wordpress sites not using composer)
+### Without Composer
+ℹ️ You can also copy the file [`NewRelicGuzzle.php`](NewRelicGuzzle.php) and include directly in your project. For example, WordPress sites not using Composer can add this file by adding a `require(/path/to/newrelic-guzzle-client/NewRelicGuzzle.php)` at the top of `wp-config.php`.
 
 ## Overview
 
@@ -24,7 +25,7 @@ a [Guzzle](https://github.com/guzzle/guzzle) middleware to report some metrics o
 
 The current implementation of the New Relic agent extension registers the Guzzle middleware on every new client instance and wraps the request in `curl_exec` rather than `curl_multi_exec` or a stream. This results in performance issues and memory exhaustion as middleware is re-registered on every request which are then wrapped into a single call.
 
-Issues seen on Pantheon customer sites include increased memory usage and request times, particularly for requests intended to be asyncronous actually being blocking calls. These bottlenecks can often be seen in the Pantheon application container php-slow.logs where `newrelic\Guzzle6` is invoked:
+Issues seen on Pantheon customer sites include increased memory usage and request times, particularly for requests intended to be asyncronous actually being blocking calls. These bottlenecks can often be seen in the Pantheon application container `php-slow.log` files where `newrelic\Guzzle6` is invoked:
 
 ```
 [20-Mar-2024 01:14:07]  [pool www] pid 10017
